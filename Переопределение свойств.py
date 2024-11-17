@@ -1,60 +1,46 @@
-class Animal:
-    live = True
-    sound = None
-    _DEGREE_OF_DANGER = 0
-    def __init__(self, speed):
-        self.speed = speed
-        self._cords = [0, 0, 0]
+class Vehicle:
+    owner = str()
+    __model = str()
+    __engine_power = int()
+    __color = str()
+    __COLOR_VARIANTS = ['blue', 'red', 'green', 'black', 'white']
 
-    def move(self, dx, dy, dz):
-        self._cords[0] = dx * self.speed
-        self._cords[1] = dy * self.speed
-        self._cords[2] = dz * self.speed
-        if dz < 0:
-            print("It's too deep, i can't dive :(")
+    def __init__(self, owner, __model, __color, __engine_power):
+        self.owner = owner
+        self.__model = __model
+        self.__engine_power = __engine_power
+        self.__color = __color
 
-    def get_cords(self):
-        print(f'X: {self._cords[0]}, Y: {self._cords[1]}, Z: {self._cords[2]}')
+    def get_model(self):
+        print(f'Модель: {self.__model}')
 
-    def attack(self):
-        if self._DEGREE_OF_DANGER < 5:
-            print("Sorry, i'm peaceful :)")
+    def get_horsepower(self):
+        print(f'Мощность двигателя: {self.__engine_power}')
+
+    def get_color(self):
+        print(f'Цвет: {self.__color}')
+
+    def print_info(self):
+        self.get_model()
+        self.get_horsepower()
+        self.get_color()
+        print(f'Владелец: {self.owner}')
+
+    def set_color(self, new_color):
+        if new_color.lower() in self.__COLOR_VARIANTS:
+            self.__color = new_color
         else:
-            print("Be careful, i'm attacking you 0_0")
+            print(f'Нельзя сменить цвет на {new_color}')
 
-    def speak(self):
-        print(self.sound)
+class Sedan(Vehicle):
+    __PASSENGERS_LIMIT = 5
 
-class Bird(Animal):
-    beak = True
-    def lay_eggs(self):
-        import random
-        num = [0, 1, 2, 3, 4]
-        self.num_ = random.choice(num)
-        print(f"Here are(is) {self.num_} eggs for you")
+vehicle1 = Sedan('Fedos', 'Toyota Mark II', 'blue', 500)
 
-class AquaticAnimal(Animal):
-    Animal._DEGREE_OF_DANGER = 3
-    def dive_in(self, dz):
-        self._cords[2] -= abs(dz) // 2 * self.speed
+vehicle1.print_info()
 
-class PoisonousAnimal(Animal):
-    Animal._DEGREE_OF_DANGER = 8
+vehicle1.set_color('Pink')
+vehicle1.set_color('BLACK')
+vehicle1.owner = 'Vasyok'
 
-class Duckbill(Bird, AquaticAnimal, PoisonousAnimal):
-    Animal.sound = "Click-click-click"
-
-db = Duckbill(10)
-
-print(db.live)
-print(db.beak)
-
-db.speak()
-db.attack()
-
-db.move(1, 2, 3)
-db.get_cords()
-db.dive_in(6)
-db.get_cords()
-
-db.lay_eggs()
+vehicle1.print_info()
